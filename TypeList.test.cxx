@@ -1,11 +1,26 @@
 #include "TypeList.hxx"
 
+#include <cassert>
+#include <iostream>
+#include <vector>
+
 template< typename... Ts >
 struct TypeList_
 {
 };
 
-CASE ( "TypeList" )
+void runTests ();
+
+int main ()
+{
+    runTests ();
+
+    std::cout << "Tests passed!\n";
+
+    return 0;
+}
+
+void runTests ()
 {
     struct A
     {
@@ -40,35 +55,35 @@ CASE ( "TypeList" )
 
     using TL = TypeList< A, B, C >;
 
-    SECTION ( "Front" )
+    // Front
     {
-        static_assert ( Same< TL::Front, A > );
+        static_assert ( std::is_same_v< TL::Front, A > );
     }
-    SECTION ( "Tail" )
+    // Tail
     {
-        static_assert ( Same< TL::Tail, TypeList< B, C > > );
+        static_assert ( std::is_same_v< TL::Tail, TypeList< B, C > > );
     }
-    SECTION ( "Back" )
+    // Back
     {
-        static_assert ( Same< TL::Back, C > );
-    }
-
-    SECTION ( "Append" )
-    {
-        static_assert ( Same< TL::Append< char >, TypeList< A, B, C, char > > );
-    }
-    SECTION ( "AppendFront" )
-    {
-        static_assert ( Same< TL::AppendFront< char >, TypeList< char, A, B, C > > );
+        static_assert ( std::is_same_v< TL::Back, C > );
     }
 
-    SECTION ( "Transmute" )
+    // Append
     {
-        static_assert ( Same< TL::Transmute< TypeList >, TL > );
-        static_assert ( Same< TL::Transmute< TypeList_ >, TypeList_< A, B, C > > );
+        static_assert ( std::is_same_v< TL::Append< char >, TypeList< A, B, C, char > > );
+    }
+    // AppendFront
+    {
+        static_assert ( std::is_same_v< TL::AppendFront< char >, TypeList< char, A, B, C > > );
     }
 
-    SECTION ( "Has" )
+    // Transmute
+    {
+        static_assert ( std::is_same_v< TL::Transmute< TypeList >, TL > );
+        static_assert ( std::is_same_v< TL::Transmute< TypeList_ >, TypeList_< A, B, C > > );
+    }
+
+    // Has
     {
         static_assert ( TL::Has< A > );
         static_assert ( TL::Has< B > );
@@ -77,7 +92,7 @@ CASE ( "TypeList" )
         static_assert ( !TL::Has< double > );
         static_assert ( !TL::Has< float > );
     }
-    SECTION ( "Size" )
+    // Size
     {
         static_assert ( TL::Size == 3 );
 
@@ -95,20 +110,20 @@ CASE ( "TypeList" )
         switch ( idx )
         {
         case 0:
-            same = Same< T, A >;
+            same = std::is_same_v< T, A >;
             break;
         case 1:
-            same = Same< T, B >;
+            same = std::is_same_v< T, B >;
             break;
         case 2:
-            same = Same< T, C >;
+            same = std::is_same_v< T, C >;
             break;
         }
 
-        REQUIRE ( same );
+        assert ( same );
     };
 
-    SECTION ( "ForEach" )
+    // ForEach
     {
         size_t idx {};
 
@@ -119,11 +134,11 @@ CASE ( "TypeList" )
             }
         );
 
-        REQUIRE ( idx == 3 );
+        assert ( idx == 3 );
     }
-    SECTION ( "ForEachIndexed" )
+    // ForEachIndexed
     {
-        Vector< size_t > indexes;
+        std::vector< size_t > indexes;
 
         TL::ForEachIndexed (
             [ &checkSame, &indexes ]< size_t I, typename T >
@@ -133,13 +148,13 @@ CASE ( "TypeList" )
             }
         );
 
-        REQUIRE ( indexes.size () == 3 );
-        REQUIRE ( indexes[ 0 ] == 0 );
-        REQUIRE ( indexes[ 1 ] == 1 );
-        REQUIRE ( indexes[ 2 ] == 2 );
+        assert ( indexes.size () == 3 );
+        assert ( indexes[ 0 ] == 0 );
+        assert ( indexes[ 1 ] == 1 );
+        assert ( indexes[ 2 ] == 2 );
     }
 
-    SECTION ( "IndexOf" )
+    // IndexOf
     {
         static_assert ( TL::IndexOf< A > == 0 );
         static_assert ( TL::IndexOf< B > == 1 );

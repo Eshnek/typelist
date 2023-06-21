@@ -1,5 +1,10 @@
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+#include <limits>
+#include <type_traits>
+
 template< typename T, typename... Ts >
 struct Front_
 {
