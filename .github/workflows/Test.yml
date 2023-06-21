@@ -23,8 +23,15 @@ jobs:
       - name: Run Tests
         if: ${{ runner.os == 'Windows' }}
         run: |
-          ./build/typelist.exe
+          ./build/typelist.exe > log.txt
       - name: Run Tests
         if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
         run: |
-          ./build/typelist
+          ./build/typelist > log.txt
+
+      - name: Match
+        uses: ./lib/match/.github/public/build_and_validate
+        with:
+          working_directory: lib/match
+          log_file: log.txt
+          regex_file: test.regex

@@ -15,7 +15,7 @@ int main ()
 {
     runTests ();
 
-    std::cout << "Tests passed!\n";
+    std::cout << "[pass]\n";
 
     return 0;
 }
