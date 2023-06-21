@@ -25,23 +25,7 @@ jobs:
       - name: Run Tests
         if: ${{ runner.os == 'Windows' }}
         run: |
-          cd build
-
-          dir
-
-          cd Debug
-
-          dir
-
-          cd ..
-
-          cd x64
-
-          dir
-
-          cd ..
-
-          ./typelist.exe > log.txt
+          ./build/Debug/typelist.exe > log.txt
       - name: Run Tests
         if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
         run: |
