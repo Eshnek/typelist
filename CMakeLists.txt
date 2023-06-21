@@ -9,3 +9,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE SourcesGlob CONFIGURE_DEPENDS tests/*.cxx)
 add_executable(typelist ${SourcesGlob})
+
+target_include_directories(typelist PUBLIC ./)
