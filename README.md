@@ -6,4 +6,4 @@ Introducing the marvelous TypeList: an open-source C++ header that revolutionize
 
 Say goodbye to tedious type manipulations and unlock a world of possibilities in your C++ projects.
 
-The header, `TypeList.hxx`, has no dependencies!
+The header, [`include/TypeList.hxx`](https://github.com/Eshnek/typelist/blob/main/include/TypeList.hxx), has no dependencies!
