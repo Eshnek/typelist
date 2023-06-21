@@ -25,9 +25,6 @@ jobs:
         run: |
           ./build/typelist.exe
       - name: Run Tests
-        if: ${{ runner.os == 'Linux' }}
+        if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
         run: |
           ./build/typelist
-      - name: Print
-        run: |
-          echo "runner.os is: ${{ runner.os }}"
