@@ -27,8 +27,19 @@ jobs:
         run: |
           cd build
 
-          ls
           dir
+
+          cd Debug
+
+          dir
+
+          cd ..
+
+          cd x64
+
+          dir
+
+          cd ..
 
           ./typelist.exe > log.txt
       - name: Run Tests
