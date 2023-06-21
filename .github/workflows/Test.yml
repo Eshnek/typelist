@@ -25,7 +25,11 @@ jobs:
       - name: Run Tests
         if: ${{ runner.os == 'Windows' }}
         run: |
-          start build/typelist.exe > log.txt
+          cd build
+
+          ls -la
+
+          ./typelist.exe > log.txt
       - name: Run Tests
         if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
         run: |
